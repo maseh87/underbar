@@ -318,6 +318,16 @@ var _ = {};
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    var result = array.slice();
+    var dice = function() {
+      return Math.floor(Math.random() * array.length);
+    }
+    _.each(array, function(item) {
+      var tempStorage;
+      tempStorage = result.splice(dice(), 1)[0];
+      result.push(tempStorage);
+    });
+    return result;
   };
 
 
