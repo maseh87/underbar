@@ -161,8 +161,11 @@ var _ = {};
   //     return total + number;
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
+    if (accumulator === undefined) {
+      accumulator = collection.shift();
+    }
     _.each(collection, function(item) {
-      accumulator = iterator(accumulator, item) || item;
+      accumulator = iterator(accumulator, item);
     });
     return accumulator;
   };
