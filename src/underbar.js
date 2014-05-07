@@ -102,6 +102,12 @@ var _ = {};
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var items = {};
+    return _.reject(array, function(item) {
+      var result = item in items;
+      items[item] = item;
+      return result;
+    });
   };
 
 
