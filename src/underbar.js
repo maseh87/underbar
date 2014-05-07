@@ -88,10 +88,16 @@ var _ = {};
     return results;
   };
 
+  // Return function that returns the ! of fn passed as argument.
+  _.negate = function(fn) {
+    return function() {
+      return !fn.apply(this, arguments);
+    }
+  }
+
   // Return all elements of an array that don't pass a truth test.
   _.reject = function(collection, test) {
-    // TIP: see if you can re-use _.filter() here, without simply
-    // copying code in and modifying it
+    return _.filter(collection, _.negate(test));
   };
 
   // Produce a duplicate-free version of the array.
