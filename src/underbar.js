@@ -162,7 +162,7 @@ var _ = {};
   //   }, 0); // should be 6
   _.reduce = function(collection, iterator, accumulator) {
     _.each(collection, function(item) {
-      accumulator = iterator(item, accumulator) || item;
+      accumulator = iterator(accumulator, item) || item;
     });
     return accumulator;
   };
