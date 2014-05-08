@@ -364,11 +364,21 @@ var _ = {};
     return results;
   };
 
+  // Returns whether or not an object is an Array.
+  _.isArray = function(obj) {
+    return Array.isArray(obj);
+  };
+
   // Takes a multidimensional array and converts it to a one-dimensional array.
   // The new array should contain all elements of the multidimensional array.
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    result = result || [];
+    _.each(nestedArray, function(item) {
+      _.isArray(item) ? _.flatten(item, result) : result.push(item);
+    });
+    return result;
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
