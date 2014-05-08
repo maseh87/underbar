@@ -291,7 +291,7 @@ var _ = {};
         func.results[arg] :
         func.results[arg] = func.call(this, arg);
     }
-  }
+  };
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
@@ -406,6 +406,10 @@ var _ = {};
     }, arguments[0]);
   };
 
+  _.now = function() {
+    return Date.now();
+  }
+
 
   /**
    * MEGA EXTRA CREDIT
@@ -417,6 +421,25 @@ var _ = {};
   //
   // See the Underbar readme for details.
   _.throttle = function(func, wait) {
+    var context, args, timeout, result;
+    var lastInvoke = 0;
+    var invokeLater = function() {
+      lastInvoke = _.now();
+      result = func.apply(context, args);
+    };
+    return function() {
+      context = this;
+      args = arguments;
+      var untilInvokeLater = wait - (_.now() - lastInvoke);
+      if (untilInvokeLater <= 0) {
+        clearInterval(timeout);
+        lastInvoke = _.now();
+        result = func.apply(context, args);
+      } else if (!timeout) {
+        timeout = setTimeout(invokeLater, untilInvokeLater);
+      }
+      return result;
+    };
   };
 
 }).call(this);
